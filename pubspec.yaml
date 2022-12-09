@@ -13,6 +13,11 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   table_calendar: ^3.0.8
+  firebase_core: ^2.3.0
+  cloud_firestore: ^4.1.0
+  image_picker: ^0.8.6
+  firebase_storage: ^11.0.6
+  storage_database: ^0.0.5+3
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorUtility {
   static const Color backGroundColor = Color(0xffF4E1D3);
+  static const Color fabColor = Color.fromARGB(255, 189, 162, 142);
   static const Color pageColor = Colors.white;
   static const Color diaryHeadlineColor = Colors.blueGrey;
   static const Color calendarTextStyle = Colors.black;

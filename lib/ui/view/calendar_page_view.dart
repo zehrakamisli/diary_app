@@ -20,10 +20,6 @@ class _CalendarPageViewState extends State<CalendarPageView> {
   DateTime _focusedDay = DateTime.now();
   String _selectedTime = "";
 
-  get titleController => null;
-
-  get _image => null;
-
   Future<QuerySnapshot<Map<String, dynamic>>> getDiaryData() {
     var db = FirebaseFirestore.instance;
     var collection = db.collection('diarys');

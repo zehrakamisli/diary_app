@@ -4,7 +4,8 @@ import 'package:diary_app/ui/model/diary_model.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'diary_page_view.dart';
+import '../widgets/ActionButton.dart';
+import '../widgets/ExpandableFab.dart';
 
 class CalendarPageView extends StatefulWidget {
   const CalendarPageView({Key? key}) : super(key: key);
@@ -18,6 +19,10 @@ class _CalendarPageViewState extends State<CalendarPageView> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   String _selectedTime = "";
+
+  get titleController => null;
+
+  get _image => null;
 
   Future<QuerySnapshot<Map<String, dynamic>>> getDiaryData() {
     var db = FirebaseFirestore.instance;
@@ -40,7 +45,28 @@ class _CalendarPageViewState extends State<CalendarPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtility.backGroundColor,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ExpandableFab(
+        distance: 75.0,
+        color: ColorUtility.fabColor,
+        children: [
+          ActionButton(
+            backgroundColor: ColorUtility.fabColor,
+            onPressed: () => _showAction(context, 0),
+            icon: const Icon(Icons.format_size),
+          ),
+          ActionButton(
+            backgroundColor: ColorUtility.fabColor,
+            onPressed: () => _showAction(context, 1),
+            icon: const Icon(Icons.insert_photo),
+          ),
+          ActionButton(
+            backgroundColor: ColorUtility.fabColor,
+            onPressed: () => _showAction(context, 2),
+            icon: const Icon(Icons.videocam),
+          ),
+        ],
+      ),
+      /* floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (_) => DiaryPage(
@@ -49,7 +75,7 @@ class _CalendarPageViewState extends State<CalendarPageView> {
         },
         backgroundColor: ColorUtility.fabColor,
         child: const Icon(Icons.add),
-      ),
+      ),*/
       body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
           future: getDiaryData(),
           builder: (context, snapshot) {
@@ -74,14 +100,15 @@ class _CalendarPageViewState extends State<CalendarPageView> {
 
   Center calendarView(BuildContext context, List<DiaryModel>? diaryData) {
     return Center(
-      child: Container(
-        height: MediaQuery.of(context).size.width * 9 / 10,
-        width: MediaQuery.of(context).size.width * 4 / 5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17),
-          color: Colors.white.withOpacity(0.8),
-        ),
-        child: TableCalendar(
+        child: Container(
+      height: MediaQuery.of(context).size.width * 9 / 10,
+      width: MediaQuery.of(context).size.width * 4 / 5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(17),
+        color: Colors.white.withOpacity(0.8),
+      ),
+      child: Column(children: [
+        TableCalendar(
           daysOfWeekStyle: const DaysOfWeekStyle(
               weekdayStyle: TextStyle(
                   color: ColorUtility.calendarTextStyle,
@@ -186,8 +213,8 @@ class _CalendarPageViewState extends State<CalendarPageView> {
               formatButtonVisible: false,
               titleCentered: true),
         ),
-      ),
-    );
+      ]),
+    ));
   }
 
   getCalendarEvents(DateTime day, List<DiaryModel>? diaryData) {
@@ -207,4 +234,6 @@ class _CalendarPageViewState extends State<CalendarPageView> {
       return dateList;
     }
   }
+
+  _showAction(BuildContext context, int i) {}
 }
